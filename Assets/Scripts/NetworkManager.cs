@@ -4,21 +4,29 @@ using System.Collections.Generic;
 using System.Linq;
 using Fusion;
 using Fusion.Sockets;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 {
-    [SerializeField] TicTacToeManager _ticTacToeManager;
+    [SerializeField] List<Button> _cellButtonList = new List<Button>();
+    [SerializeField] TMP_Text _playerText;
+    [SerializeField] TMP_Text _turnText;
+    [SerializeField] GameObject _gameManagerPrefab;
     public static NetworkManager instance;
-    public NetworkRunner networkRunner;
+    public NetworkRunner _networkRunner;
+    public List<Button> CellButtonList => _cellButtonList;
+    public TMP_Text PlayerText => _playerText;
+    public TMP_Text TurnText => _turnText;
 
     private void Awake()
     {
-        if (networkRunner == null)
+        if (_networkRunner == null)
         {
-            networkRunner = gameObject.AddComponent<NetworkRunner>();
+            _networkRunner = gameObject.AddComponent<NetworkRunner>();
         }
     }
 
@@ -28,16 +36,20 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         {
             instance = this;
         }
-
         StartGame();
+    }
+
+    public NetworkRunner GetNetworkRunner()
+    {
+        return _networkRunner;
     }
 
     async void StartGame()
     {
         // Create the Fusion runner and let it know that we will be providing user input
-        networkRunner.ProvideInput = true;
+        _networkRunner.ProvideInput = true;
         // Create the NetworkSceneInfo from the current scene
-            var scene = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex);
+        var scene = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex);
         var sceneInfo = new NetworkSceneInfo();
         if (scene.IsValid)
         {
@@ -45,7 +57,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         }
 
         // Start or join (depends on gamemode) a session with a specific name
-        await networkRunner.StartGame(new StartGameArgs()
+        await _networkRunner.StartGame(new StartGameArgs()
         {
             GameMode = GameMode.AutoHostOrClient,
             SessionName = "TestRoom",
@@ -58,30 +70,30 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnConnectedToServer(NetworkRunner runner)
     {
-        Debug.Log("Connected to Server!");
+
     }
 
     public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
     {
-        Debug.Log("Connected to Server Failed!");
+        
     }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         if (runner.IsServer)
         {
-            _ticTacToeManager.SetPlayerText("Player One" , 1);
+            
         }
         else
         {
-            _ticTacToeManager.SetPlayerText("Player Two" , 2);
+
         }
         InitializeGame();
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        Debug.Log("Player has left the game");
+        
     }
 
     #region UnusedMethods
@@ -163,13 +175,22 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     #endregion
     private void InitializeGame()
     {
-        int playerCount = networkRunner.ActivePlayers.Count();
-        Debug.Log("Player count " + playerCount);
+        int playerCount = _networkRunner.ActivePlayers.Count();
+
         if (playerCount <= 1)
         {
             return;
         }
-        _ticTacToeManager.InitializeComponents();
-        GameManager.instance.StartGame();
+        InitializeGameManager();
+    }
+
+    private void InitializeGameManager()
+    {
+        if (_networkRunner.IsServer)
+        {
+            Vector3 spawnPosition = Vector3.zero;
+            Quaternion spawnRotation = Quaternion.identity;
+            _networkRunner.Spawn(_gameManagerPrefab, spawnPosition, spawnRotation);
+        }
     }
 }

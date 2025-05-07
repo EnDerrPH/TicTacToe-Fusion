@@ -151,85 +151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &169408735
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 169408737}
-  - component: {fileID: 169408736}
-  - component: {fileID: 169408738}
-  m_Layer: 0
-  m_Name: TicTacToeManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &169408736
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 169408735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc77db66fd03c07409c4013a44d68824, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerText: {fileID: 1111043111}
-  _turnText: {fileID: 2037581583}
-  _cellButtons:
-  - {fileID: 717582260}
-  - {fileID: 1119259423}
-  - {fileID: 987642130}
-  - {fileID: 128658286}
-  - {fileID: 82802207}
-  - {fileID: 759448136}
-  - {fileID: 759382516}
-  - {fileID: 1755802997}
-  - {fileID: 451736182}
-  _playerNumber: 0
-  _collectedNumbers: 
-  _gameOverPanel: {fileID: 204879200}
---- !u!4 &169408737
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 169408735}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 915.1306, y: 537.185, z: -5.2768703}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &169408738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 169408735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SortKey: 2229528947
-  ObjectInterest: 1
-  Flags: 262145
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 169408736}
-  ForceRemoteRenderTimeframe: 0
 --- !u!1 &204879200
 GameObject:
   m_ObjectHideFlags: 0
@@ -1066,71 +987,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &835559129
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 832971310729342456, guid: 4f19c9eecad5db24e882f1c70fc9dfe1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 832971310729342456, guid: 4f19c9eecad5db24e882f1c70fc9dfe1, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 832971310729342456, guid: 4f19c9eecad5db24e882f1c70fc9dfe1, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 832971310729342456, guid: 4f19c9eecad5db24e882f1c70fc9dfe1, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 832971310729342456, guid: 4f19c9eecad5db24e882f1c70fc9dfe1, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 832971310729342456, guid: 4f19c9eecad5db24e882f1c70fc9dfe1, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 832971310729342456, guid: 4f19c9eecad5db24e882f1c70fc9dfe1, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 832971310729342456, guid: 4f19c9eecad5db24e882f1c70fc9dfe1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 832971310729342456, guid: 4f19c9eecad5db24e882f1c70fc9dfe1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 832971310729342456, guid: 4f19c9eecad5db24e882f1c70fc9dfe1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4167682936021505668, guid: 4f19c9eecad5db24e882f1c70fc9dfe1, type: 3}
-      propertyPath: _ticTacToeManager
-      value: 
-      objectReference: {fileID: 169408736}
-    - target: {fileID: 6035047650716917015, guid: 4f19c9eecad5db24e882f1c70fc9dfe1, type: 3}
-      propertyPath: m_Name
-      value: GameManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 8866885649575842288, guid: 4f19c9eecad5db24e882f1c70fc9dfe1, type: 3}
-      propertyPath: SortKey
-      value: 947804868
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4f19c9eecad5db24e882f1c70fc9dfe1, type: 3}
 --- !u!1001 &987642128
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2409,8 +2265,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a15997ad08e54d4409ab5d3d0610e4f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ticTacToeManager: {fileID: 169408736}
-  networkRunner: {fileID: 0}
+  _cellButtonList:
+  - {fileID: 717582260}
+  - {fileID: 1119259423}
+  - {fileID: 987642130}
+  - {fileID: 128658286}
+  - {fileID: 82802207}
+  - {fileID: 759448136}
+  - {fileID: 759382516}
+  - {fileID: 1755802997}
+  - {fileID: 451736182}
+  _playerText: {fileID: 1111043111}
+  _turnText: {fileID: 2037581583}
+  _gameManagerPrefab: {fileID: 6035047650716917015, guid: 4f19c9eecad5db24e882f1c70fc9dfe1, type: 3}
+  _networkRunner: {fileID: 0}
 --- !u!4 &2060656649
 Transform:
   m_ObjectHideFlags: 0
@@ -2536,5 +2404,3 @@ SceneRoots:
   - {fileID: 2015386481}
   - {fileID: 1704505229}
   - {fileID: 2060656649}
-  - {fileID: 169408737}
-  - {fileID: 835559129}
