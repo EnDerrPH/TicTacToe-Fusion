@@ -28,20 +28,16 @@ public class GameManager : NetworkBehaviour
     {
         if (_networkRunner.LocalPlayer != _playerTurn)
             return;
-
-        if (index == -1)
-            return;
-
-        string symbol = (_playerTurn == _playerOneRef) ? "X" : "O";
+        AudioManager.instance.OnCellSFX();
         UpdateCollectedCells(_playerTurn, index);
-
         if (_networkRunner.IsServer)
         {
-            RPC_UpdateCellText(index, symbol);
+            bool isCross = _playerTurn == _playerOneRef;
+            RPC_UpdateCellVisual(index, isCross);
 
             if (CheckWin(_playerTurn == _playerOneRef ? _playerOneMoves : _playerTwoMoves))
             {
-                RPC_AnnounceWinner(_playerTurn == _playerOneRef ? "Player One Wins!" : "Player Two Wins!");
+                RPC_AnnounceWinner(isCross ? "Player One Wins!" : "Player Two Wins!");
                 return;
             }
 
@@ -55,7 +51,8 @@ public class GameManager : NetworkBehaviour
         }
         else
         {
-            RPC_ClientDoneWithTurn(index, symbol);  
+            bool isCross = _playerTurn == _playerOneRef;
+            RPC_ClientDoneWithTurn(index,isCross);  
         }
     }
 
@@ -173,13 +170,13 @@ public class GameManager : NetworkBehaviour
 
     #region RPC
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_UpdateCellText(int buttonIndex, string symbol)
+    private void RPC_UpdateCellVisual(int buttonIndex, bool isCross)
     {
-        TMP_Text text = _cellButtonList[buttonIndex].GetComponentInChildren<TMP_Text>();
-        if (text != null)
-        {
-            text.text = symbol;
-        }
+        var cellHandler = _cellButtonList[buttonIndex].GetComponent<CellHandler>();
+        if (isCross)
+            cellHandler.OnActivateCross();
+        else
+            cellHandler.OnActivateCircle();
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
@@ -190,13 +187,13 @@ public class GameManager : NetworkBehaviour
     }
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void RPC_ClientDoneWithTurn(int index, string symbol)
+    public void RPC_ClientDoneWithTurn(int index, bool isCross)
     {
         if (!_networkRunner.IsServer)
             return;
 
         UpdateCollectedCells(_playerTurn, index);
-        RPC_UpdateCellText(index, symbol);
+        RPC_UpdateCellVisual(index, isCross);
 
         if (CheckWin(_playerTurn == _playerOneRef ? _playerOneMoves : _playerTwoMoves))
         {
