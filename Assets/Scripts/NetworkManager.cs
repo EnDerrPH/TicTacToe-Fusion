@@ -13,6 +13,7 @@ using UnityEngine.UI;
 public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] List<Button> _cellButtonList = new List<Button>();
+    [SerializeField] ChatHandler _chatHandler;
     [SerializeField] TMP_Text _playerText;
     [SerializeField] TMP_Text _turnText;
     [SerializeField] GameObject _gameManagerPrefab;
@@ -36,12 +37,18 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         {
             instance = this;
         }
+        _chatHandler.SetNetworkRunner(_networkRunner);
         StartGame();
     }
 
     public NetworkRunner GetNetworkRunner()
     {
         return _networkRunner;
+    }
+
+    public ChatHandler GetChatHandler()
+    {
+        return _chatHandler;
     }
 
     async void StartGame()

@@ -11,16 +11,16 @@ public class GameManager : NetworkBehaviour
     TMP_Text _playerText;
     TMP_Text _turnText;
     NetworkRunner _networkRunner;
+    ChatHandler _chatHandler;
     private List<int> _playerOneMoves = new List<int>();
     private List<int> _playerTwoMoves = new List<int>();
-    [Networked] private PlayerRef _playerOneRef { get; set; }
-    [Networked] private PlayerRef _playerTwoRef { get; set; }
+    [Networked] public  PlayerRef PlayerOneRef { get; set; }
+    [Networked] public  PlayerRef PlayerTwoRef { get; set; }
     [Networked] private PlayerRef _playerTurn { get; set; }
 
     public override void Spawned()
     {
         InitializeGameManager();
-        UpdatePlayersLabel();
         AddListener();
     }
 
@@ -32,10 +32,10 @@ public class GameManager : NetworkBehaviour
         UpdateCollectedCells(_playerTurn, index);
         if (_networkRunner.IsServer)
         {
-            bool isCross = _playerTurn == _playerOneRef;
+            bool isCross = _playerTurn == PlayerOneRef;
             RPC_UpdateCellVisual(index, isCross);
 
-            if (CheckWin(_playerTurn == _playerOneRef ? _playerOneMoves : _playerTwoMoves))
+            if (CheckWin(_playerTurn == PlayerOneRef ? _playerOneMoves : _playerTwoMoves))
             {
                 RPC_AnnounceWinner(isCross ? "Player One Wins!" : "Player Two Wins!");
                 return;
@@ -51,7 +51,7 @@ public class GameManager : NetworkBehaviour
         }
         else
         {
-            bool isCross = _playerTurn == _playerOneRef;
+            bool isCross = _playerTurn == PlayerOneRef;
             RPC_ClientDoneWithTurn(index,isCross);  
         }
     }
@@ -60,7 +60,7 @@ public class GameManager : NetworkBehaviour
     {
         if (!_networkRunner.IsServer)
             return;
-        _playerTurn = _playerTurn == _playerOneRef ? _playerTwoRef : _playerOneRef;
+        _playerTurn = _playerTurn == PlayerOneRef ? PlayerTwoRef : PlayerOneRef;
 
         RPC_UpdateTurn(_playerTurn);
     }
@@ -72,17 +72,17 @@ public class GameManager : NetworkBehaviour
             var players = _networkRunner.ActivePlayers.ToList();
 
             if (players.Count >= 1)
-                _playerOneRef = players[0];
+                PlayerOneRef = players[0];
 
             if (players.Count >= 2)
-                _playerTwoRef = players[1];
+                PlayerTwoRef = players[1];
         }
 
-        if (_networkRunner.LocalPlayer == _playerOneRef)
+        if (_networkRunner.LocalPlayer == PlayerOneRef)
         {
             _playerText.text = "Player One";
         }
-        else if (_networkRunner.LocalPlayer == _playerTwoRef)
+        else if (_networkRunner.LocalPlayer == PlayerTwoRef)
         {
             _playerText.text = "Player Two";
         }
@@ -97,6 +97,9 @@ public class GameManager : NetworkBehaviour
         _playerText = networkManager.PlayerText;
         _turnText = networkManager.TurnText;
         InitializePlayerTurn();
+        UpdatePlayersLabel();
+        _chatHandler = networkManager.GetChatHandler();
+        _chatHandler.SetGameManager(this);
     }
 
     private void AddListener()
@@ -149,9 +152,9 @@ public class GameManager : NetworkBehaviour
 
     private void UpdateCollectedCells(PlayerRef player, int index)
     {
-        if (player == _playerOneRef)
+        if (player == PlayerOneRef)
             _playerOneMoves.Add(index);
-        else if (player == _playerTwoRef)
+        else if (player == PlayerTwoRef)
             _playerTwoMoves.Add(index);
     }
 
@@ -195,9 +198,9 @@ public class GameManager : NetworkBehaviour
         UpdateCollectedCells(_playerTurn, index);
         RPC_UpdateCellVisual(index, isCross);
 
-        if (CheckWin(_playerTurn == _playerOneRef ? _playerOneMoves : _playerTwoMoves))
+        if (CheckWin(_playerTurn == PlayerOneRef ? _playerOneMoves : _playerTwoMoves))
         {
-            RPC_AnnounceWinner(_playerTurn == _playerOneRef ? "Player One Wins!" : "Player Two Wins!");
+            RPC_AnnounceWinner(_playerTurn == PlayerOneRef ? "Player One Wins!" : "Player Two Wins!");
             return; // Stop turn change if someone won
         }
 
