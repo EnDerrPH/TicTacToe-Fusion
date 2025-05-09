@@ -34,6 +34,7 @@ public class ChatHandler : NetworkBehaviour
         }
     }
 
+    #region  RPC
     public void CallMessageRPC()
     {
         string message = _inputText.text;
@@ -45,4 +46,6 @@ public class ChatHandler : NetworkBehaviour
     {
         _messages.text += $"{name}: {message}\n";
     }
+    
+    #endregion
 }
